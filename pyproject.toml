@@ -1,0 +1,24 @@
+[project]
+name = "nlp-generative-chatbot"
+version = "0.1.0"
+description = "Generative chatbot using seq2seq LSTM models (with and without Luong attention) trained on the WikiQA corpus"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "datasets>=4.8.5",
+    "ipykernel>=7.2.0",
+    "jupyter>=1.1.1",
+    "matplotlib>=3.10.9",
+    "nltk>=3.9.4",
+    "numpy>=2.4.4",
+    "pandas>=3.0.2",
+    "sacrebleu>=2.6.0",
+    "scikit-learn>=1.8.0",
+    "torch>=2.11.0",
+    "tqdm>=4.67.3",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.15.12",
+]

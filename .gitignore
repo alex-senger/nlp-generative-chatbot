@@ -1,0 +1,52 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# uv
+uv.lock
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Data (raw datasets can be large — each member downloads locally)
+data/raw/
+data/processed/
+*.csv
+*.tsv
+*.txt
+!requirements*.txt
+*.json
+!pyproject.toml
+*.zip
+*.tar.gz
+*.gz
+
+# Model checkpoints & outputs
+checkpoints/
+models/
+outputs/
+*.pt
+*.pth
+*.bin
+
+# Logs & metrics
+logs/
+runs/
+*.log
+tensorboard/
+
+# OS
+.DS_Store
+Thumbs.db
