@@ -1,36 +1,49 @@
 # NLP Generative Chatbot
 
-Group project for the NLP module — implementing a generative chatbot using Sequence-to-Sequence (seq2seq) models on the WikiQA dataset.
+Group project for the NLP module — implementing a generative chatbot using a Sequence-to-Sequence (seq2seq) LSTM model trained on the WikiQA dataset.
 
-## Models
+## Overview
 
-| # | Model | Architecture |
+Two independent pipelines are implemented, each with its own preprocessing and model notebook:
+
+| Pipeline | Training data | Notebooks |
 | --- | --- | --- |
-| 1 | Basic Seq2Seq | LSTM encoder–decoder, no attention |
-| 2 | Luong Attention Seq2Seq | LSTM encoder–decoder + Luong dot-product attention |
+| **correct-answers-only** | Label=1 rows only (728 Q&A pairs) | `notebooks/correct-answers-only/` |
+| **full-dataset** | All rows, Label=0 and Label=1 (16,206 Q&A pairs) | `notebooks/full-dataset/` |
+
+Both pipelines use the same architecture: a single-layer LSTM encoder–decoder with no attention.
 
 ## Dataset — WikiQA
 
 **WikiQA Corpus** — question–answer sentence pairs sourced from Wikipedia (Microsoft Research, 2015).
 
-Download the dataset manually from the Microsoft Research page and place the extracted files in `data/raw/`:
+**Local:** download from the Microsoft Research page and place the extracted files in `data/raw/`:
 
 [https://www.microsoft.com/en-us/download/details.aspx?id=52419](https://www.microsoft.com/en-us/download/details.aspx?id=52419)
+
+**Google Colab:** the preprocessing notebooks detect the Colab environment automatically and download the dataset from HuggingFace — no manual step needed.
 
 ## Project structure
 
 ```text
 .
 ├── data/
-│   ├── raw/        # Downloaded dataset cache (git-ignored)
-│   └── processed/  # Any processed/encoded data (git-ignored)
-├── notebooks/      # Jupyter notebooks go here
-├── results/        # Outputs, plots, checkpoints (git-ignored)
+│   ├── raw/             # Downloaded dataset files (git-ignored)
+│   ├── processed/       # Encoded correct-answers-only splits (git-ignored)
+│   └── processed_full/  # Encoded full-dataset splits (git-ignored)
+├── notebooks/
+│   ├── correct-answers-only/
+│   │   ├── 01_preprocessing.ipynb
+│   │   └── 02_seq2seq_basic.ipynb
+│   └── full-dataset/
+│       ├── 01_preprocessing.ipynb
+│       └── 02_seq2seq_basic.ipynb
+├── results/             # Checkpoints and plots (git-ignored)
 ├── pyproject.toml
 └── README.md
 ```
 
-## Environment setup
+## Running locally
 
 This project uses [uv](https://github.com/astral-sh/uv) for dependency management.
 
@@ -41,19 +54,13 @@ cd nlp-generative-chatbot
 
 # Create the virtual environment and install all dependencies
 uv sync
-```
 
-## Running notebooks
-
-```bash
+# Launch Jupyter
 uv run jupyter lab
 ```
 
-## Code quality
+Run notebooks in order within each pipeline: `01_preprocessing.ipynb` first, then `02_seq2seq_basic.ipynb`.
 
-Please keep the code clean and well-documented. Use `ruff` for linting and formatting:
+## Running in Google Colab
 
-```bash
-uv run ruff check
-uv run ruff format
-```
+Each notebook detects the Colab environment automatically. Open each notebook in Colab, select a GPU runtime (Runtime > Change runtime type > T4 GPU), and run cells top-to-bottom. Run `01_preprocessing.ipynb` before `02_seq2seq_basic.ipynb` in the same session so the processed files are available.
